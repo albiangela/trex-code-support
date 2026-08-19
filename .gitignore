@@ -1,0 +1,6 @@
+.DS_Store
+.ipynb_checkpoints/
+
+# Local example/output data — not part of the published code
+example-trex-annotations/
+myexample-training-data/
