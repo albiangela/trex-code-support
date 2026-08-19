@@ -1,11 +1,11 @@
 # trex-code-support
 
-Support scripts for working with [TRex](https://trex.run) animal-tracking exports: converting annotation exports into a YOLO training dataset, and batch-running TRex's video conversion over many clips.
+Support scripts for working with [`TRex`](https://trex.run) animal-tracking exports: converting annotation exports into a YOLO training dataset, and batch-running `TRex`'s video conversion over many clips.
 
 ## Contents
 
-- [`annotations-to-dataset.ipynb`](annotations-to-dataset.ipynb) — merges T-REX and Roboflow annotation exports into a single, validated YOLO `train`/`val` dataset.
-- [`run_trex_batch.sh`](run_trex_batch.sh) — batch-runs the `trex` CLI's video conversion over multiple clips.
+- [`annotations-to-dataset.ipynb`](annotations-to-dataset.ipynb) — merges `TRex` and Roboflow annotation exports into a single, validated YOLO `train`/`val` dataset.
+- [`run_trex_batch.sh`](run_trex_batch.sh) — batch-runs the `TRex` CLI's video conversion over multiple clips.
 
 ---
 
@@ -13,9 +13,9 @@ Support scripts for working with [TRex](https://trex.run) animal-tracking export
 
 ### What it does
 
-The notebook finds one or more T-REX `videoname_annotations_yolo` export folders and optional Roboflow exports (detected via the `roboflow:` block in their `data.yaml`, so the folder itself can have any name) under an input directory. It:
+The notebook finds one or more `TRex` `videoname_annotations_yolo` export folders and optional Roboflow exports (detected via the `roboflow:` block in their `data.yaml`, so the folder itself can have any name) under an input directory. It:
 
-1. Renames T-REX frames to `videoname_frame_number` so every file stays unique once pooled (Roboflow files already have unique names and are kept as-is).
+1. Renames `TRex` frames to `videoname_frame_number` so every file stays unique once pooled (Roboflow files already have unique names and are kept as-is).
 2. Pools every export together into one staging area.
 3. Uses [`dataset-fixer`](https://github.com/mooch443/dataset-fixer) to validate the pooled data and split it into a new `train`/`val` YOLO dataset, writing `train/images`, `train/labels`, `val/images`, `val/labels`, and `data.yaml`, plus validation, lineage, and split-audit reports.
 
@@ -61,7 +61,7 @@ Once configured, run section "4. Build the dataset" to perform the conversion.
 
 ### What it does
 
-`run_trex_batch.sh` batch-runs TRex's own `trex` command-line tool (`trex -i <video> -s <settings> -task convert`) over multiple video files, so you don't have to invoke it by hand for every clip. It has two modes:
+`run_trex_batch.sh` batch-runs `TRex`'s own `trex` command-line tool (`trex -i <video> -s <settings> -task convert`) over multiple video files, so you don't have to invoke it by hand for every clip. It has two modes:
 
 - **`-d DIRECTORY`** — recursively searches `DIRECTORY` for MP4 files matching a filename pattern (any subfolder literally named `clips` is skipped), and runs the conversion on each match in sorted order.
 - **`-v VIDEO_OR_PATTERN`** — either a single existing MP4 file (processed directly), or a filename glob pattern (e.g. `/path/to/videos/y*.mp4`), matched non-recursively within that one directory.
@@ -70,8 +70,8 @@ The script stops and reports an error if the settings file is missing, if `trex`
 
 ### Prerequisites
 
-- TRex installed, with the `trex` binary available on your `PATH`.
-- A TRex `.settings` file for the conversion.
+- `TRex` installed, with the `trex` binary available on your `PATH`.
+- A `TRex` `.settings` file for the conversion.
 
 ### How to use it
 
@@ -102,7 +102,7 @@ Options:
 | `-d DIRECTORY` | Recursively search a directory for MP4s (mode 1) | — |
 | `-v VIDEO_OR_PATTERN` | Process a single video or glob pattern (mode 2) | — |
 | `-p PATTERN` | Filename pattern used with `-d` | `y*.mp4` |
-| `-s SETTINGS` | Path to the TRex `.settings` file | `default.settings` |
+| `-s SETTINGS` | Path to the `TRex` `.settings` file | `default.settings` |
 | `-h` | Show help | — |
 
 Use either `-d` or `-v`, not both. Run `./run_trex_batch.sh -h` at any time to see this usage summary.
