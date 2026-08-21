@@ -66,7 +66,7 @@ Once configured, run section "4. Build the dataset" to perform the conversion.
 - **`-d DIRECTORY`** — recursively searches `DIRECTORY` for MP4 files matching a filename pattern (any subfolder literally named `clips` is skipped), and runs the conversion on each match in sorted order.
 - **`-v VIDEO_OR_PATTERN`** — either a single existing MP4 file (processed directly), or a filename glob pattern (e.g. `/path/to/videos/y*.mp4`), matched non-recursively within that one directory.
 
-The script stops and reports an error if the settings file is missing, if `trex` isn't on the `PATH`, or if any matched video fails to convert.
+The script stops and reports an error if the settings file is missing, if `trex` isn't on the `PATH`, or if any matched video fails to convert. Each video's `TRex` stdout/stderr is also saved next to it as `<video>.trex.log`, so a failure can be diagnosed later without rerunning.
 
 ### Prerequisites
 

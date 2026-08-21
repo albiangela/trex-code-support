@@ -30,6 +30,10 @@ Options:
   -h
       Show this help.
 
+Output:
+  Each video's TRex stdout/stderr is saved next to it as
+  <video>.trex.log, so a failure can be diagnosed without rerunning.
+
 Examples:
   ./run_trex_batch.sh \
       -d "/path/to/videos" \
@@ -105,21 +109,28 @@ fi
 
 run_trex() {
     local input="$1"
+    local log="${input%.*}.trex.log"
 
     echo
     echo "Starting TRex"
     echo "Input:    $input"
     echo "Settings: $SETTINGS"
+    echo "Log:      $log"
 
+    # Tee trex's own stdout/stderr to a per-video log file (next to the
+    # video) so a failure can be diagnosed later without rerunning. Relies
+    # on 'set -o pipefail' above so the pipeline's exit status is trex's,
+    # not tee's.
     if trex \
         -i "$input" \
         -s "$SETTINGS" \
-        -task convert
+        -task convert \
+        2>&1 | tee "$log"
     then
         echo "Finished: $input"
         return 0
     else
-        echo "TRex failed: $input" >&2
+        echo "TRex failed: $input (see $log)" >&2
         return 1
     fi
 }
